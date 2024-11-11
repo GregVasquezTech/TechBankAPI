@@ -1,0 +1,6 @@
+@TechBankAPI_HostAddress = http://localhost:5269
+
+GET {{TechBankAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
