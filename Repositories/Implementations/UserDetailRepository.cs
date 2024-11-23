@@ -1,25 +1,31 @@
-﻿using TechBankAPI.Entities;
+﻿using System.Data.Entity;
+using TechBankAPI.DbContexts;
+using TechBankAPI.Entities;
 using TechBankAPI.Repositories.Interfaces;
 
 namespace TechBankAPI.Repositories.Implementations
 {
-    public class UserDetailRepository : IUserDetailRepository
+    public class UserDetailRepository(ApplicationDbContext _applicationDbContext) : IUserDetailRepository
     {
-        public Task<UserDetail> GetUserDetailAsync()
+        public async Task<UserDetail> GetUserDetailAsync(UserDetail userDetail)
         {
-            throw new NotImplementedException();
+            return await _applicationDbContext.UserDetails.FirstAsync(u => u.UserId == userDetail.UserId);
         }
-        public Task<UserDetail> CreateUserDetailAsync(UserDetail userDetail)
+        public async Task<UserDetail> CreateUserDetailAsync(UserDetail userDetail)
         {
-            throw new NotImplementedException();
+            _applicationDbContext.UserDetails.Add(userDetail);
+            await _applicationDbContext.SaveChangesAsync();
+            return userDetail;
         }
-        public Task UpdateUserDetailAsync(int userId)
+        public async Task UpdateUserDetailAsync(UserDetail userDetail)
         {
-            throw new NotImplementedException();
+            _applicationDbContext.UserDetails.Update(userDetail);
+            await _applicationDbContext.SaveChangesAsync();
         }
-        public Task DeleteUserDetailAsync(int userId)
+        public async Task DeleteUserDetailAsync(UserDetail userDetail)
         {
-            throw new NotImplementedException();
+            _applicationDbContext.UserDetails.Remove(userDetail);
+            await _applicationDbContext.SaveChangesAsync();
         }
     }
 }

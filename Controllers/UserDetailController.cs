@@ -1,8 +1,46 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TechBankAPI.Models.UserDetail;
+using TechBankAPI.Services.Interfaces;
 
 namespace TechBankAPI.Controllers
 {
-    public class UserDetailController: ControllerBase
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UserDetailController : ControllerBase
     {
+        private readonly IUserDetailService _userDetailService;
+
+        public UserDetailController(IUserDetailService userDetailService)
+        {
+            _userDetailService = userDetailService;
+        }
+
+
+        [HttpGet, Authorize]
+        public async Task<IActionResult> GetUserDetail()
+        {
+            return Ok(await _userDetailService.GetUserDetailAsync());
+        }
+
+        [HttpPost, Authorize]
+        public async Task<IActionResult> CreateUserDetail(CreateUserDetailDto createUserDetailDto)
+        {
+            return Ok(await _userDetailService.CreateUserDetailAsync(createUserDetailDto));
+        }
+
+        [HttpPut, Authorize]
+        public async Task<IActionResult> UpdateUserDetail(UpdateUserDetailDto updateUserDetailDto)
+        {
+            await _userDetailService.UpdateUserDetailAsync(updateUserDetailDto);
+            return NoContent();
+        }
+
+        [HttpDelete, Authorize]
+        public async Task<IActionResult> DeleteUserDetail()
+        {
+            await _userDetailService.DeleteUserDetailAsync();
+            return NoContent();
+        }
     }
 }
