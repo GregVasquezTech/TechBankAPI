@@ -4,6 +4,7 @@ namespace TechBankAPI.Services.Interfaces
 {
     public interface IUserDetailService
     {
+        public Task<string> GetUserEmailAsync();
         public Task<UserDetailDto> GetUserDetailAsync();
         public Task<CreateUserDetailDto> CreateUserDetailAsync(CreateUserDetailDto createUserDetailDto);
         public System.Threading.Tasks.Task UpdateUserDetailAsync(UpdateUserDetailDto updateUserDetailDto);

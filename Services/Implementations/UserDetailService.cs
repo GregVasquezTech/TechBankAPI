@@ -1,14 +1,27 @@
-﻿using TechBankAPI.Models.UserDetail;
+﻿using AutoMapper;
+using TechBankAPI.Models.UserDetail;
 using TechBankAPI.Repositories.Interfaces;
 using TechBankAPI.Services.Interfaces;
 
 namespace TechBankAPI.Services.Implementations
 {
-    public class UserDetailService(IUserDetailRepository userDetailRepository) : IUserDetailService
+    public class UserDetailService : IUserDetailService
     {
+        private readonly IMapper _mapper;
+        private readonly IUserDetailRepository _userDetailRepository;
+
+        public UserDetailService(IMapper mapper, IUserDetailRepository userDetailRepository)
+        {
+            _mapper = mapper;
+            _userDetailRepository = userDetailRepository;
+        }
+        public async Task<string> GetUserEmailAsync()
+        {
+            if (HttpContext.Sess)
+        }
         public async Task<UserDetailDto> GetUserDetailAsync()
         {
-            throw new NotImplementedException();
+            return _mapper.Map<UserDetailDto>(_userDetailRepository.GetUserDetailAsync();
         }
         public Task<CreateUserDetailDto> CreateUserDetailAsync(CreateUserDetailDto createUserDetailDto)
         {
